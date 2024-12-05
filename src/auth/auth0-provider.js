@@ -26,9 +26,11 @@ export const Auth0ProviderWithNavigate = ({ children }) => {
       clientId={clientId}
       authorizationParams={{
         redirect_uri: `${getBaseUrl()}/#/`,
-        returnTo: `${getBaseUrl()}/#/signin`
       }}
       onRedirectCallback={onRedirectCallback}
+      logoutParams={{
+        returnTo: `${getBaseUrl()}/#/signin`
+      }}
     >
       {children}
     </Auth0Provider>
