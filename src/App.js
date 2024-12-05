@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Signin from './components/Signin';
 import Main from './components/Main';
@@ -8,7 +8,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Auth0ProviderWithNavigate>
         <Routes>
           <Route path='/signin' element={<Signin />} />
@@ -24,7 +24,7 @@ function App() {
           }/>
         </Routes>
       </Auth0ProviderWithNavigate>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
