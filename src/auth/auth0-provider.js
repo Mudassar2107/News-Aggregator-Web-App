@@ -1,20 +1,23 @@
-import { Auth0Provider } from "@auth0/auth0-react";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import { Auth0Provider } from '@auth0/auth0-react';
+import { useNavigate } from 'react-router-dom';
 
-const getBaseUrl = () => {
-  return process.env.NODE_ENV === 'production'
-    ? 'https://mudassar2107.github.io/News-Aggregator-Web-App'
-    : 'http://localhost:3000';
-};
-
-function Auth0ProviderWithNavigate({ children }) {
+export const Auth0ProviderWithNavigate = ({ children }) => {
   const navigate = useNavigate();
 
-  const domain = "dev-hef6f3vawycrww1i.us.auth0.com";
-  const clientId = "G5AHWNj066xuXrwPrRSBgoi0A7Opojqo";
-
   const onRedirectCallback = (appState) => {
-    navigate(appState?.returnTo || window.location.pathname);
+    navigate(appState?.returnTo || '/');
+  };
+
+  const domain = "dev-hef6f3vawycrvw1i.us.auth0.com";
+  const clientId = "G5AHWNj066xuXrwPrRSBgoi0A7Opojqo";
+  
+  // Get the base URL for GitHub Pages or localhost
+  const getBaseUrl = () => {
+    if (process.env.NODE_ENV === 'production') {
+      return 'https://mudassar2107.github.io/News-Aggregator-Web-App';
+    }
+    return window.location.origin;
   };
 
   return (
@@ -25,10 +28,13 @@ function Auth0ProviderWithNavigate({ children }) {
         redirect_uri: `${getBaseUrl()}/#/`,
       }}
       onRedirectCallback={onRedirectCallback}
+      logoutParams={{
+        returnTo: `${getBaseUrl()}/#/signin`
+      }}
     >
       {children}
     </Auth0Provider>
   );
-}
+};
 
 export default Auth0ProviderWithNavigate;
