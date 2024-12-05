@@ -17,23 +17,18 @@ export function Auth0ProviderWithNavigate({ children }) {
     navigate(appState?.returnTo || '/');
   };
 
+  const baseUrl = getBaseUrl();
+
   return (
     <Auth0Provider
       domain={domain}
       clientId={clientId}
       authorizationParams={{
-        redirect_uri: process.env.NODE_ENV === 'production'
-          ? 'https://mudassar2107.github.io/News-Aggregator-Web-App/#/'
-          : 'http://localhost:3000/#/',
+        redirect_uri: `${baseUrl}`,
         scope: "openid profile email"
       }}
       onRedirectCallback={onRedirectCallback}
-      logoutParams={{
-        returnTo: process.env.NODE_ENV === 'production'
-          ? 'https://mudassar2107.github.io/News-Aggregator-Web-App/#/signin'
-          : 'http://localhost:3000/#/signin',
-        client_id: clientId
-      }}
+      cacheLocation="localstorage"
     >
       {children}
     </Auth0Provider>
