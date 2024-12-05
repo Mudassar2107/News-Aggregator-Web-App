@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
+import { toast } from "react-toastify";
 import logo from "../images/news-logo.jpg";
 import lens from "../images/search.svg";
 
@@ -20,8 +21,7 @@ function Navbar({setMenu, setSearch}) {
   const handleLogout = () => {
     logout({ 
       logoutParams: {
-        returnTo: `${window.location.origin}/#/signin`,
-        client_id: "G5AHWNj066xuXrwPrRSBgoi0A7Opojqo"
+        returnTo: window.location.origin + '/#/signin'
       }
      });
      toast.success("Logged out successfully!");
