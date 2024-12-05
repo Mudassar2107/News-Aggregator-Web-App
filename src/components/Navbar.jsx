@@ -19,13 +19,16 @@ function Navbar({setMenu, setSearch}) {
   }, []);
 
   const handleLogout = () => {
+    const baseUrl = process.env.NODE_ENV === 'production'
+      ? 'https://mudassar2107.github.io/News-Aggregator-Web-App'
+      : 'http://localhost:3000';
+      
     logout({ 
       logoutParams: {
-        returnTo: `${window.location.origin}/#/signin`,
-        client_id: "G5AHWNj066xuXrwPrRSBgoi0A7Opojqo",
+        returnTo: `${baseUrl}/#/signin`
       }
-     });
-     toast.success("Logged out successfully!");
+    });
+    toast.success("Logged out successfully!");
   };
 
   return (
