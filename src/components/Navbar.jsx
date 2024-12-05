@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import logo from "../images/news-logo.jpg";
 import lens from "../images/search.svg";
-import { toast } from 'react-toastify';
 
 function Navbar({setMenu, setSearch}) {
   const { logout, isAuthenticated, user } = useAuth0();
@@ -19,16 +18,8 @@ function Navbar({setMenu, setSearch}) {
   }, []);
 
   const handleLogout = () => {
-    logout({
-      logoutParams: {
-        returnTo: `${window.location.origin}/#/signin`,
-        client_id: "G5AHWNj066xuXrwPrRSBgoi0A7Opojqo"
-      }
-    });
-    toast.success('Logged out successfully!');
+    logout({ returnTo: window.location.origin });
   };
-
-  const categories = ['general', 'business', 'entertainment', 'health', 'science', 'sports', 'technology'];
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 text-white ${
@@ -122,9 +113,9 @@ function Navbar({setMenu, setSearch}) {
         </div>
 
         {/* Navigation Categories */}
-        <div className="hidden md:block border-t border-white/10">
-          <div className="flex justify-center space-x-1 py-1">
-            {categories.map((category) => (
+        <div className="hidden md:block border-t border-white/10 -mt-2">
+          <div className="flex justify-center space-x-1 -my-1">
+            {['general', 'business', 'entertainment', 'health', 'science', 'sports', 'technology'].map((category) => (
               <button
                 key={category}
                 onClick={() => setMenu(category)}
@@ -137,32 +128,34 @@ function Navbar({setMenu, setSearch}) {
         </div>
 
         {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="md:hidden border-t border-white/10">
-            <div className="py-2 space-y-1">
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  onClick={() => {
-                    setMenu(category);
-                    setIsMenuOpen(false);
-                  }}
-                  className="block w-full px-4 py-2 text-left text-sm font-medium hover:bg-white/10 transition-colors duration-200 capitalize"
-                >
-                  {category === 'general' ? 'Home' : category}
-                </button>
-              ))}
-              {isAuthenticated && (
-                <button
-                  onClick={handleLogout}
-                  className="block w-full px-4 py-2 text-left text-sm font-medium hover:bg-white/10 transition-colors duration-200"
-                >
-                  Logout
-                </button>
-              )}
-            </div>
+        <div
+          className={`md:hidden transition-all duration-300 ease-in-out ${
+            isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
+          }`}
+        >
+          <div className="py-2 space-y-1 border-t border-white/10">
+            {['general', 'business', 'entertainment', 'health', 'science', 'sports', 'technology'].map((category) => (
+              <button
+                key={category}
+                onClick={() => {
+                  setMenu(category);
+                  setIsMenuOpen(false);
+                }}
+                className="block w-full px-4 py-2 text-left text-sm font-medium hover:bg-white/10 transition-colors duration-200 capitalize"
+              >
+                {category === 'general' ? 'Home' : category}
+              </button>
+            ))}
+            {isAuthenticated && (
+              <button
+                onClick={handleLogout}
+                className="block w-full px-4 py-2 text-left text-sm font-medium hover:bg-white/10 transition-colors duration-200"
+              >
+                Logout
+              </button>
+            )}
           </div>
-        )}
+        </div>
       </div>
     </nav>
   );
