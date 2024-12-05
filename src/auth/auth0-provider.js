@@ -7,7 +7,7 @@ const getBaseUrl = () => {
     : 'http://localhost:3000';
 };
 
-function Auth0ProviderWithNavigate({ children }) {
+export function Auth0ProviderWithNavigate({ children }) {
   const navigate = useNavigate();
 
   const domain = "dev-hef6f3vawycrww1i.us.auth0.com";
@@ -25,6 +25,10 @@ function Auth0ProviderWithNavigate({ children }) {
         redirect_uri: `${getBaseUrl()}/#/`,
       }}
       onRedirectCallback={onRedirectCallback}
+      logoutParams={{
+        returnTo: `${getBaseUrl()}/#/signin`,
+        client_id: clientId
+      }}
     >
       {children}
     </Auth0Provider>
