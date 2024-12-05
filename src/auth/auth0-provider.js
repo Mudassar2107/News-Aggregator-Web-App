@@ -14,7 +14,7 @@ export function Auth0ProviderWithNavigate({ children }) {
   const clientId = "G5AHWNj066xuXrwPrRSBgoi0A7Opojqo";
 
   const onRedirectCallback = (appState) => {
-    navigate(appState?.returnTo || window.location.pathname);
+    navigate(appState?.returnTo || '/');
   };
 
   return (
@@ -22,11 +22,16 @@ export function Auth0ProviderWithNavigate({ children }) {
       domain={domain}
       clientId={clientId}
       authorizationParams={{
-        redirect_uri: `${getBaseUrl()}/#/`,
+        redirect_uri: process.env.NODE_ENV === 'production'
+          ? 'https://mudassar2107.github.io/News-Aggregator-Web-App/#/'
+          : 'http://localhost:3000/#/',
+        scope: "openid profile email"
       }}
       onRedirectCallback={onRedirectCallback}
       logoutParams={{
-        returnTo: `${getBaseUrl()}/#/signin`,
+        returnTo: process.env.NODE_ENV === 'production'
+          ? 'https://mudassar2107.github.io/News-Aggregator-Web-App/#/signin'
+          : 'http://localhost:3000/#/signin',
         client_id: clientId
       }}
     >
