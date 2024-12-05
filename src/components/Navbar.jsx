@@ -21,9 +21,7 @@ function Navbar({setMenu, setSearch}) {
   const handleLogout = () => {
     logout({ 
       logoutParams: {
-        returnTo: process.env.NODE_ENV === 'production'
-          ? 'https://mudassar2107.github.io/News-Aggregator-Web-App/#/signin'
-          : 'http://localhost:3000/#/signin'
+        returnTo: window.location.origin + '/News-Aggregator-Web-App/#/signin'
       }
      });
      toast.success("Logged out successfully!");
