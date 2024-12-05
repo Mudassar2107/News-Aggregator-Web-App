@@ -21,7 +21,7 @@ function Navbar({setMenu, setSearch}) {
   const handleLogout = () => {
     logout({ 
       logoutParams: {
-        returnTo: window.location.origin + '/#/signin'
+        returnTo: window.location.origin + '/News-Aggregator-Web-App/#/signin'
       }
      });
      toast.success("Logged out successfully!");
